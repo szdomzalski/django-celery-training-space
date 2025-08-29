@@ -1,0 +1,11 @@
+services:
+  web:
+    container_name: django-web
+    build:
+      context: ./demo_celery
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./demo_celery:/usr/src/app/
+    ports:
+      - "8001:8000"
+    env_file: ".env"
