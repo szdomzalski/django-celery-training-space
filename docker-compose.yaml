@@ -13,7 +13,7 @@ services:
       - "8001:8000"
     env_file: ".env"
     depends_on:
-      - redis
+      - broker
 
   consumer:
     container_name: celery-worker
@@ -23,4 +23,4 @@ services:
       - ./demo_celery:/usr/src/app/
     env_file: ".env"
     depends_on:
-      - redis
+      - broker
