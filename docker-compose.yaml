@@ -15,10 +15,11 @@ services:
     depends_on:
       - broker
 
-  consumer:
+  worker:
     container_name: celery-worker
     build:
       context: ./demo_celery
+    command: celery -A demo_celery worker -l INFO
     volumes:
       - ./demo_celery:/usr/src/app/
     env_file: ".env"
