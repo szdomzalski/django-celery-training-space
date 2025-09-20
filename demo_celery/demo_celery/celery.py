@@ -1,4 +1,3 @@
-from numbers import Number
 import os
 
 from celery import Celery
