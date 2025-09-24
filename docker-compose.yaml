@@ -19,7 +19,7 @@ services:
     container_name: celery-worker
     build:
       context: ./demo_celery
-    command: celery -A demo_celery worker -l INFO
+    command: celery -A demo_celery worker -l INFO -Q queue_add
     volumes:
       - ./demo_celery:/usr/src/app/
     env_file: ".env"
@@ -32,7 +32,7 @@ services:
     container_name: celery-standalone
     build:
       context: ./celery_standalone
-    command: celery -A celery_standalone worker -l INFO
+    command: celery -A celery_standalone worker -l INFO -Q queue_multiply
     volumes:
       - ./celery_standalone:/usr/src/app/
     depends_on:
