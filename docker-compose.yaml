@@ -1,7 +1,13 @@
 services:
   broker:
-    image: "redis:alpine"
-    container_name: redis
+    # image: "redis:alpine"
+    # container_name: redis
+    image: "rabbitmq:management"
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"   # RabbitMQ default port
+      - "15672:15672" # RabbitMQ Management console
+
   producer:
     container_name: django-producer
     build:
@@ -19,7 +25,7 @@ services:
     container_name: celery-worker
     build:
       context: ./demo_celery
-    command: celery -A demo_celery worker -l INFO -Q queue_add
+    command: celery -A demo_celery worker -l INFO -Q tasks
     volumes:
       - ./demo_celery:/usr/src/app/
     env_file: ".env"
@@ -28,13 +34,13 @@ services:
       - producer
 
   # Celery worker as a standalone service (without Django codebase)
-  celery_standalone:
-    container_name: celery-standalone
-    build:
-      context: ./celery_standalone
-    command: celery -A celery_standalone worker -l INFO -Q queue_multiply
-    volumes:
-      - ./celery_standalone:/usr/src/app/
-    depends_on:
-      - broker
-      - producer
+  # celery_standalone:
+  #   container_name: celery-standalone
+  #   build:
+  #     context: ./celery_standalone
+  #   command: celery -A celery_standalone worker -l INFO -Q queue_multiply
+  #   volumes:
+  #     - ./celery_standalone:/usr/src/app/
+  #   depends_on:
+  #     - broker
+  #     - producer

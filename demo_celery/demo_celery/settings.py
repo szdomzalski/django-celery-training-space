@@ -124,5 +124,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Celery Configuration Options
-CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://broker:6379/0')
-CELERY_RESULT_BACKEND = os.environ.get('CELERY_BACKEND_URL', 'redis://broker:6379/0')
+# CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://broker:6379/0')
+# CELERY_RESULT_BACKEND = os.environ.get('CELERY_BACKEND_URL', 'redis://broker:6379/0')
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'amqp://guest:guest@broker:5672/')
+CELERY_RESULT_BACKEND = os.environ.get('CELERY_BACKEND_URL', 'rpc://')
