@@ -5,6 +5,8 @@ from celery import Celery
 from celery.app.utils import Settings
 from kombu import Exchange, Queue
 
+from consumer.tasks import add2
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'demo_celery.settings')
 
 app = Celery('demo_celery')
@@ -53,3 +55,29 @@ def sleepy_task_2() -> str:
 def sleepy_task_3() -> str:
     time.sleep(3)
     return 'Slept for 3 seconds'
+
+
+def test() -> None:
+    result = add2.apply_async(args=[4, 6], queue='tasks')
+
+    if result.ready():
+        print('Task has completed')
+    else:
+        print('Task is still processing...')
+
+    if result.successful():
+        print('Task completed successfully.')
+    else:
+        print('Task failed.')
+
+    try:
+        output = result.get(timeout=10)
+        print(f'Task result: {output}')
+    except Exception as e:
+        print(f'Error retrieving task result: {e}')
+
+    exception = result.get(propagate=False)
+    if exception:
+        print(f'Task raised an exception: {exception}')
+
+
