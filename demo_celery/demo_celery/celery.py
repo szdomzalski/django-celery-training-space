@@ -81,3 +81,14 @@ def test() -> None:
         print(f'Task raised an exception: {exception}')
 
 
+def execute_sync() -> None:
+    result = add2.apply_async(args=[4, 6], queue='tasks')
+    task_result = result.get()
+    print(f'Task result: {task_result}')
+    print('result.get caught the main thread until the task is finished')
+
+
+def execute_async() -> None:
+    result = add2.apply_async(args=[6, 7], queue='tasks')
+    print('Task has been dispatched, main thread is free to continue doing other work.')
+    print('Doing other work...')
