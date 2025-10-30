@@ -27,7 +27,7 @@ task_dir = os.path.join(base_dir, 'demo_celery', 'celery_tasks')
 if os.path.exists(task_dir) and os.path.isdir(task_dir):
     task_modules = []
     for filename in os.listdir(task_dir):
-        if filename.startswith('ex_') and filename.endswith('.py'):
+        if filename.endswith('.py'):
             module_name = f'demo_celery.celery_tasks.{filename[:-3]}'
             # Dynamically import the task module
             # Provides access to the tasks defined in the module
