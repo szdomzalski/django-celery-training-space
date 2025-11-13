@@ -38,7 +38,7 @@ services:
     container_name: celery-worker
     build:
       context: ./demo_celery
-    command: celery -A demo_celery worker -n my_django_based_celery_worker -l INFO -Q tasks
+    command: celery -A demo_celery worker -n my_django_based_celery_worker -l INFO -Q tasks,dead_letter
     volumes:
       - ./demo_celery:/usr/src/app/
     env_file: ".env"
