@@ -38,7 +38,13 @@ services:
     container_name: celery-worker
     build:
       context: ./demo_celery
-    command: celery -A demo_celery worker -n my_django_based_celery_worker -l INFO -Q tasks,dead_letter
+    # Command to start the Celery worker
+    # -A specifies the Celery application instance
+    # -n assigns a name to the worker
+    # -l INFO sets the logging level to INFO
+    # -Q specifies the queues to listen to (tasks and dead_letter)
+    # -E stands for enabling events, which are required for monitoring tasks in Flower
+    command: celery -A demo_celery worker -n my_django_based_celery_worker -l INFO -Q tasks,dead_letter -E
     volumes:
       - ./demo_celery:/usr/src/app/
     env_file: ".env"
