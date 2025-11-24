@@ -3,12 +3,20 @@ import os
 from celery import Celery
 from celery.app.utils import Settings
 from kombu import Exchange, Queue
+import sentry_sdk
+from sentry_sdk.integrations.celery import CeleryIntegration
+
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'demo_celery.settings')
 
 app = Celery('demo_celery')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 cfg: Settings = app.conf
+sentry_dsn = os.environ['SENTRY_DSN']
+sentry_sdk.init(
+    dsn=sentry_dsn,
+    integrations=[CeleryIntegration()],
+)
 
 # Setting up a priority queue with RabbitMQ broker
 cfg.task_queues = [

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 import os
 from pathlib import Path
+# import sentry_sdk
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -130,3 +131,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Using RabbitMQ as a broker and RPC (still Rabbit) as result backend
 CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'amqp://guest:guest@broker:5672/')
 CELERY_RESULT_BACKEND = os.environ.get('CELERY_BACKEND_URL', 'rpc://')
+
+
+# dsn = os.environ['SENTRY_DSN']
+# sentry_sdk.init(
+#     dsn=dsn,
+#     # Add data like request headers and IP for users,
+#     # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
+#     send_default_pii=True,
+# )
