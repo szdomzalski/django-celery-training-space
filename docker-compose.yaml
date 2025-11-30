@@ -44,7 +44,9 @@ services:
     # -l INFO sets the logging level to INFO
     # -Q specifies the queues to listen to (tasks and dead_letter)
     # -E stands for enabling events, which are required for monitoring tasks in Flower
-    command: celery -A demo_celery worker -n my_django_based_celery_worker -l INFO -Q tasks,dead_letter -E
+    # -B enables the Celery beat scheduler alongside the celery worker;
+    #   NOTE: In production, it's recommended to run beat as a separate service
+    command: celery -A demo_celery worker -n my_django_based_celery_worker -l INFO -Q tasks,dead_letter -E -B
     volumes:
       - ./demo_celery:/usr/src/app/
     env_file: ".env"
