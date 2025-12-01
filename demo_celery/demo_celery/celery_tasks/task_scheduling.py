@@ -1,4 +1,4 @@
-from datetime import timedelta
+# from datetime import timedelta
 
 from demo_celery.celery_config import app
 
@@ -7,16 +7,16 @@ b = 1
 c = 1
 d = 2
 
-app.conf.beat_schedule = {
-    'add': {
-        'task': 'demo_celery.celery_tasks.task_scheduling.add',
-        'schedule': timedelta(seconds=10),
-    },
-    'multiply': {
-        'task': 'demo_celery.celery_tasks.task_scheduling.mutliply',
-        'schedule': timedelta(seconds=10),
-    }
-}
+# app.conf.beat_schedule = {
+#     'add': {
+#         'task': 'demo_celery.celery_tasks.task_scheduling.add',
+#         'schedule': timedelta(seconds=10),
+#     },
+#     'multiply': {
+#         'task': 'demo_celery.celery_tasks.task_scheduling.mutliply',
+#         'schedule': timedelta(seconds=10),
+#     }
+# }
 
 
 @app.task(queue='tasks')
