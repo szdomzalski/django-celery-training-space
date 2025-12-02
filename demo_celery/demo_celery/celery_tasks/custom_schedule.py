@@ -1,5 +1,7 @@
 from datetime import timedelta
 
+from celery.schedules import crontab
+
 from demo_celery.celery_config import app
 
 a = 0
@@ -10,7 +12,7 @@ d = 2
 app.conf.beat_schedule = {
     'add': {
         'task': 'demo_celery.celery_tasks.custom_schedule.add',
-        'schedule': timedelta(seconds=10),
+        'schedule': crontab(),  # Executes every minute
     },
     'multiply': {
         'task': 'demo_celery.celery_tasks.custom_schedule.multiply',
