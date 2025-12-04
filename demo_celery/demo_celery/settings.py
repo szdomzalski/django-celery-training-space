@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'consumer',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -140,3 +141,7 @@ CELERY_RESULT_BACKEND = os.environ.get('CELERY_BACKEND_URL', 'rpc://')
 #     # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
 #     send_default_pii=True,
 # )
+
+# Instruct Celery Beat to use the database scheduler (scheduler implementation that stores the schedule in the Django
+#   database)
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'

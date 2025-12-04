@@ -9,22 +9,22 @@ b = 1
 c = 1
 d = 2
 
-app.conf.beat_schedule = {
-    'add': {
-        'task': 'demo_celery.celery_tasks.custom_schedule.add',
-        'schedule': crontab(),  # Executes every minute
-    },
-    'multiply': {
-        'task': 'demo_celery.celery_tasks.custom_schedule.multiply',
-        'schedule': timedelta(seconds=10),
-        'kwargs': {'foo': 'bar'},
-        'args': (1, 2),  # Unfortunately, passed args cannot be changed dynamically (fixed at startup time)
-        'options': {
-            'queue': 'tasks',
-            'priority': 5,
-        }
-    },
-}
+# app.conf.beat_schedule = {
+#     'add': {
+#         'task': 'demo_celery.celery_tasks.custom_schedule.add',
+#         'schedule': crontab(),  # Executes every minute
+#     },
+#     'multiply': {
+#         'task': 'demo_celery.celery_tasks.custom_schedule.multiply',
+#         'schedule': timedelta(seconds=10),
+#         'kwargs': {'foo': 'bar'},
+#         'args': (1, 2),  # Unfortunately, passed args cannot be changed dynamically (fixed at startup time)
+#         'options': {
+#             'queue': 'tasks',
+#             'priority': 5,
+#         }
+#     },
+# }
 
 
 @app.task(queue='tasks')
