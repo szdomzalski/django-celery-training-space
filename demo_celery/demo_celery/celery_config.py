@@ -33,20 +33,23 @@ cfg.worker_concurrency = 1  # Number of worker processes
 base_dir = os.getcwd()
 task_dir = os.path.join(base_dir, 'demo_celery', 'celery_tasks')
 
-if os.path.exists(task_dir) and os.path.isdir(task_dir):
-    task_modules = []
-    for filename in os.listdir(task_dir):
-        if filename.endswith('.py'):
-            module_name = f'demo_celery.celery_tasks.{filename[:-3]}'
-            # Dynamically import the task module
-            # Provides access to the tasks defined in the module
-            module = __import__(module_name, fromlist=['*'])
-            # Collect all task functions defined in the module
-            for name in dir(module):
-                # Check if the attribute is a callable task function
-                obj = getattr(module, name)
-                if callable(obj) and name.startswith('my_task'):
-                    # Register the task module for autodiscovery
-                    task_modules.append(f'{module_name}.{name}')
+# Dynamically discover and register task modules
+# if os.path.exists(task_dir) and os.path.isdir(task_dir):
+#     task_modules = []
+#     for filename in os.listdir(task_dir):
+#         if filename.endswith('.py'):
+#             module_name = f'demo_celery.celery_tasks.{filename[:-3]}'
+#             # Dynamically import the task module
+#             # Provides access to the tasks defined in the module
+#             module = __import__(module_name, fromlist=['*'])
+#             # Collect all task functions defined in the module
+#             for name in dir(module):
+#                 # Check if the attribute is a callable task function
+#                 obj = getattr(module, name)
+#                 if callable(obj) and name.startswith('my_task'):
+#                     # Register the task module for autodiscovery
+#                     task_modules.append(f'{module_name}.{name}')
 
-    app.autodiscover_tasks(task_modules)
+#     app.autodiscover_tasks(task_modules)
+
+app.autodiscover_tasks()
