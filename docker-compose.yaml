@@ -65,3 +65,16 @@ services:
   #   depends_on:
   #     - broker
   #     - producer
+
+  # Celery worker as a standalone service (without Django codebase)
+  service_worker:
+    container_name: service-worker
+    build:
+      context: ./service_worker
+    command: celery -A service_worker worker -l INFO -B
+    volumes:
+      - ./service_worker:/usr/src/app/
+    env_file: ".env"
+    environment:
+      - PRODUCER_HOST=django-producer
+      - PRODUCER_PORT=8000
